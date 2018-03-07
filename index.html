@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>bootstrap 4</title>
+	<meta charset="utf-8">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<div class="kolumner-kontainer">
+		<div class="porsche porscheHover">
+			<img src="bilder/porsche-logo.png">
+			<h1 class="gom">Porsche 918</h1>
+			<img class="gom" src="bilder/porsche.png">	
+			<i class="gom fa fa-chevron-left"></i>
+		</div>
+		<div class="ferrari ferrariHover">
+			<img src="bilder/ferrari-logo.png">
+			<h1 class="gom">Ferrari Laferrari</h1>
+			<img class="gom" src="bilder/ferrari.png">	
+			<i class="gom fa fa-chevron-left"></i>
+		</div>
+		<div class="lamborghini lamborghiniHover">
+			<img src="bilder/lamborghini-logo.png">	
+			<h1 class="gom">Lamborghini Aventador</h1>
+			<img class="gom" src="bilder/lamborghini.png">	
+			<i class="gom fa fa-chevron-left"></i>
+		</div>
+		<div class="mercedes mercedesHover">
+			<img src="bilder/mercedes-logo.png">
+			<h1 class="gom">mercedes AMG gt</h1>
+			<img class="gom" src="bilder/mercedes.png">	
+			<i class="gom fa fa-chevron-left"></i>
+		</div>
+		<div class="audi audiHover">
+			<img src="bilder/audi-logo.png">
+			<h1 class="gom">Audi r8</h1>
+			<img class="gom" src="bilder/audi-r8.png">	
+			<i class="gom fa fa-chevron-left"></i>
+		</div>
+	</div>
+
+	<script>
+	document.addEventListener("DOMContentLoaded", function(event){ 
+		var kolumnerkontainer = document.getElementsByClassName("kolumner-kontainer")[0];
+		var allaKollumner = document.querySelectorAll(".kolumner-kontainer > div");
+
+		kolumnerkontainer.addEventListener("click" , function(e){
+			if(e.target.nodeName === "DIV"){
+				allaKollumner.forEach(function(ele){
+					if(e.target.className !== ele.className){
+						ele.classList.add("minimera");	
+						ele.children[0].style.display = "none";
+					}
+				goemGradient(e.target.classList);
+				setTimeout(visaDoldaElement, 2000, e.target.children);	
+				});
+			}
+			else if(e.target.nodeName === "IMG"){
+				allaKollumner.forEach(function(ele){
+				if(e.target.parentElement.className !== ele.className){
+					ele.classList.add("minimera");	
+					ele.children[0].style.display = "none";
+				}
+				goemGradient(e.target.parentElement.classList);
+				setTimeout(visaDoldaElement, 2000, e.target.parentElement.children);
+				});
+			}
+			if(e.target.nodeName === "DIV"){
+				document.querySelector("."+e.target.className).children[3].addEventListener("click" , aktivVy);
+			}
+			else{
+				document.querySelector("."+e.target.parentElement.className).children[3].addEventListener("click" , aktivVy);
+			}	
+		});
+
+	function goemGradient(hoverklasser){
+		if(hoverklasser.contains("porscheHover")){
+			hoverklasser.remove("porscheHover");
+		}else if(hoverklasser.contains("ferrariHover")){
+			hoverklasser.remove("ferrariHover");
+		}else if(hoverklasser.contains("lamborghiniHover")){
+				hoverklasser.remove("lamborghiniHover");
+		}else if(hoverklasser.contains("mercedesHover")){
+				hoverklasser.remove("mercedesHover");
+		}else{
+			hoverklasser.remove("audiHover");
+		}
+	}
+	function visaDoldaElement(target){
+		target[1].style.display = "block";
+		target[2].classList.add("visa-bild");
+		target[3].classList.add("tillbaka-knapp");		
+	}
+	function aktivVy(e){
+		var nuvarande = e.target.parentElement;
+		allaKollumner.forEach(function(ele){
+			ele.classList.remove("minimera");	
+			ele.children[0].style.display = "initial";
+			if(ele === nuvarande){
+				nuvarande.children[1].style.display = "none";
+				nuvarande.children[2].classList.remove("visa-bild");
+				nuvarande.children[3].classList.remove("tillbaka-knapp");
+			}
+		});
+		switch(nuvarande.className){
+		case "porsche": nuvarande.classList.add("porscheHover");
+			break;
+		case "ferrari": nuvarande.classList.add("ferrariHover");
+			break;
+		case "lamborghini": nuvarande.classList.add("lamborghiniHover");
+			break;
+		case "mercedes": nuvarande.classList.add("mercedesHover");
+			break;
+		case "audi": nuvarande.classList.add("audiHover");
+			break;	
+		}
+	}
+
+	});
+</script>
+</body>
+</html>
+
