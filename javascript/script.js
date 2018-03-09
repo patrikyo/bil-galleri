@@ -1,35 +1,49 @@
 document.addEventListener("DOMContentLoaded", function(event){ 
-	var kolumnerkontainer = document.getElementsByClassName("kolumner-kontainer")[0];
-	var allaKollumner = document.querySelectorAll(".kolumner-kontainer > div");
+		var kolumnerkontainer = document.getElementsByClassName("kolumner-kontainer")[0];
+		var allaKollumner = document.querySelectorAll(".kolumner-kontainer > div");
 
-	kolumnerkontainer.addEventListener("click" , function(e){
-		if(e.target.nodeName === "DIV"){
-			allaKollumner.forEach(function(ele){
-				if(e.target.className !== ele.className){
+		kolumnerkontainer.addEventListener("click" , function(e){
+			if(e.target.nodeName === "DIV"){
+				allaKollumner.forEach(function(ele){
+					if(e.target.className !== ele.className){
+						ele.classList.add("minimera");	
+						ele.children[0].style.display = "none";
+					}
+				goemGradient(e.target.classList);
+				setTimeout(visaDoldaElement, 2000, e.target.children);	
+				});
+			}
+			else if(e.target.nodeName === "IMG"){
+				allaKollumner.forEach(function(ele){
+				if(e.target.parentElement.className !== ele.className){
 					ele.classList.add("minimera");	
 					ele.children[0].style.display = "none";
 				}
-			goemGradient(e.target.classList);
-			setTimeout(visaDoldaElement, 2000, e.target.children);	
-			});
-		}
-		else if(e.target.nodeName === "IMG"){
-			allaKollumner.forEach(function(ele){
-			if(e.target.parentElement.className !== ele.className){
-				ele.classList.add("minimera");	
-				ele.children[0].style.display = "none";
+				goemGradient(e.target.parentElement.classList);
+				setTimeout(visaDoldaElement, 2000, e.target.parentElement.children);
+				});
 			}
-			goemGradient(e.target.parentElement.classList);
-			setTimeout(visaDoldaElement, 2000, e.target.parentElement.children);
-			});
+			if(e.target.nodeName === "DIV"){
+				document.querySelector("."+e.target.className).children[3].addEventListener("click" , aktivVy);
+			}
+			else{
+				document.querySelector("."+e.target.parentElement.className).children[3].addEventListener("click" , aktivVy);
+			}	
+		});
+
+	function goemGradient(hoverklasser){
+		if(hoverklasser.contains("porscheHover")){
+			hoverklasser.remove("porscheHover");
+		}else if(hoverklasser.contains("ferrariHover")){
+			hoverklasser.remove("ferrariHover");
+		}else if(hoverklasser.contains("lamborghiniHover")){
+				hoverklasser.remove("lamborghiniHover");
+		}else if(hoverklasser.contains("mercedesHover")){
+				hoverklasser.remove("mercedesHover");
+		}else{
+			hoverklasser.remove("audiHover");
 		}
-		if(e.target.nodeName === "DIV"){
-			document.querySelector("."+e.target.className).children[3].addEventListener("click" , aktivVy);
-		}
-		else{
-			document.querySelector("."+e.target.parentElement.className).children[3].addEventListener("click" , aktivVy);
-		}	
-	});
+	}
 	function visaDoldaElement(target){
 		target[1].style.display = "block";
 		target[2].classList.add("visa-bild");
@@ -59,4 +73,5 @@ document.addEventListener("DOMContentLoaded", function(event){
 			break;	
 		}
 	}
-});
+
+	});
